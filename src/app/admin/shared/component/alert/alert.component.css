@@ -1,0 +1,24 @@
+.alert-wrap {
+  position: fixed;
+  top: 4rem;
+  right: 2rem;
+  max-width: 8rem;
+  font-size: 1rem;
+}
+
+.alert-success {
+  background-color: rgba(146, 224, 146, 0.4);
+  padding: 0.4rem;
+}
+
+.alert-danger {
+  background-color: red;
+  padding: 0.4rem;
+}
+
+.alert-warning {
+  background-color: rgba(224, 224, 38, 0.4);
+  padding: 0.4rem;
+}
+
+/*# sourceMappingURL=alert.component.css.map */

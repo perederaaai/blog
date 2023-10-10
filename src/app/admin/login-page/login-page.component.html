@@ -1,0 +1,54 @@
+<form class="login-wrap" [formGroup]="form" (ngSubmit)=submit()>
+  <h2>Вхід в панель адміністратора</h2>
+
+  <div class="form-control"
+       [ngClass]="{invalid: form.get('email')?.touched && form.get('email')?.invalid}"
+  >
+    <div class="alert-error" *ngIf="auth.error$ | async as error">{{error}}</div>
+    <div class="alert-error" *ngIf="message">{{message}}</div>
+
+    <div class="input-wrap">
+      <div>
+        <label for="email">Email:</label>
+        <input id="email" type="email" formControlName="email">
+      </div>
+      <div class="validation"
+           *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+        <small class="red"
+          *ngIf="form.get('email')?.errors?.['required']">Вкажіть email в полі вище </small>
+        <small class="red"
+          *ngIf="form.get('email')?.errors?.['email']"
+        >Введіть коректний email</small>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="form-control"
+       [ngClass]="{invalid: form.get('password')?.touched && form.get('password')?.invalid}"
+  >
+    <div class="input-wrap">
+      <div>
+        <label for="password">Password</label>
+        <input id="password" type="password" formControlName="password">
+
+        <div class="validation"
+             *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+          <small class="red"
+            *ngIf="form.get('password')?.errors?.['required']">Вкажіть пароль в полі вище
+            <br>
+          </small>
+          <small class="red"
+            *ngIf="form.get('password')?.errors?.['minlength']">
+            Має бути довшим на
+            {{form.get('password')?.errors?.['minlength']['requiredLength'] - form.get('password')?.errors?.['minlength']['actualLength']}}
+            символи
+            <br>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-dark" [disabled]="form.invalid "> Вхід</button>
+</form>

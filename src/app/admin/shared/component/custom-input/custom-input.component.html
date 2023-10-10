@@ -1,0 +1,12 @@
+<div class="input-wrap" [class]="inputClass">
+  <label>{{label}}</label>
+
+  <input [value]="value || inputValue" [type]="inputType" [placeholder]="placeholder" (input)="changeValue($event)" >
+
+  <div class="validation" *ngIf="control?.touched && control?.invalid">
+    <small *ngIf="control ? control.hasError('required') : undefined">{{requiredText}} <br></small>
+
+    <small *ngIf="control ? control.hasError('minlength') : undefined">{{lenghtText}} </small>
+  </div>
+
+</div>

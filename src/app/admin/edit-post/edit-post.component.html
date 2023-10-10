@@ -1,0 +1,30 @@
+<div *ngIf="form; else loader">
+  <form class="card card-wrap" [formGroup]="form" (ngSubmit)="submit()">
+    <div>
+      <div class="form-control">
+        <app-custom-input
+          [inputClass]="'validation-input'"
+          [label]="'Заголовок:'"
+          formControlName="title"
+          inputValue="{{value}}"
+          [inputType]="'text'"
+          [requiredText]="'А заголовок буде?'"
+          [class]="'valid-input'"
+          [placeholder]="'Напишіть заголовок'"
+        ></app-custom-input>
+      </div>
+
+      <div class="form-control">
+        <label>Текст посту: </label>
+        <div [froalaEditor] [(froalaModel)]="editorContent" formControlName="text"></div>
+      </div>
+    </div>
+    <br>
+
+    <button type="submit" class="btn btn-dark" [disabled]="form.invalid"> Підтвердити</button>
+
+  </form>
+</div>
+<ng-template #loader>
+  Завантаження...
+</ng-template>

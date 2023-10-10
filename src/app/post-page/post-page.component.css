@@ -1,0 +1,18 @@
+.post .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-block: 1rem;
+}
+.post .info {
+  margin-block: 0.5rem;
+}
+.post .info span {
+  margin-right: 1rem;
+}
+.post-text {
+  padding: 1rem;
+  border: 1px solid grey;
+}
+
+/*# sourceMappingURL=post-page.component.css.map */

@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 @import "node_modules/froala-editor/css/froala_editor.pkgd.min.css";
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -67,36 +66,32 @@ img {
   outline: none;
   border-radius: 8px;
   max-width: 9rem;
-
-  &-dark {
-    background: black;
-    border: 1px solid blanchedalmond;
-  }
-
-  &:disabled {
-    background: #ccc;
-    color: #000;
-    cursor: not-allowed;
-  }
-
-  &-danger {
-    background: red;
-    display: inline-block;
-    color: #fff;
-    padding: 0.4rem 1.3rem;
-    font-size: 1rem;
-    border: none;
-    cursor: pointer;
-    margin-right: 0.5rem;
-    transition: opacity 0.2s ease-in;
-    outline: none;
-  }
+}
+.btn-dark {
+  background: black;
+  border: 1px solid blanchedalmond;
+}
+.btn:disabled {
+  background: #ccc;
+  color: #000;
+  cursor: not-allowed;
+}
+.btn-danger {
+  background: red;
+  display: inline-block;
+  color: #fff;
+  padding: 0.4rem 1.3rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: opacity 0.2s ease-in;
+  outline: none;
 }
 
 .btn:hover {
   opacity: 0.8;
 }
-
 
 .card {
   display: flex;
@@ -107,17 +102,14 @@ img {
   max-width: 50rem;
   margin-block: 0.7rem;
   border: 3px solid #1e2e6b;
-
-
-  &-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  &-wrap {
-    margin: 0 auto;
-  }
+}
+.card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.card-wrap {
+  margin: 0 auto;
 }
 
 input,
@@ -154,13 +146,12 @@ img {
 .p-wrap {
   display: flex;
   justify-content: space-between;
-  padding-block: 4px
+  padding-block: 4px;
 }
 
 .completed {
   color: red;
 }
-
 
 .navbar {
   display: flex;
@@ -173,22 +164,18 @@ img {
   margin-bottom: 1rem;
   background: #141c3b;
   color: #fff;
-
-  ul {
-    display: flex;
-
-    li.active a {
-      //font-weight: bold;
-      color: #726217;
-      cursor: default;
-    }
-  }
-
-  a {
-    color: #fff;
-    padding: 0.45rem;
-    margin: 0 0.25rem;
-  }
+}
+.navbar ul {
+  display: flex;
+}
+.navbar ul li.active a {
+  color: #726217;
+  cursor: default;
+}
+.navbar a {
+  color: #fff;
+  padding: 0.45rem;
+  margin: 0 0.25rem;
 }
 
 .main {
@@ -203,31 +190,26 @@ img {
   display: flex;
   flex-direction: column;
   width: 15rem;
-
-  &-info {
-    display: flex;
-    justify-content: space-around;
-  }
+}
+.rate-info {
+  display: flex;
+  justify-content: space-around;
 }
 
 .tire-img {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-
-  &__main {
-    height: 9rem;
-    width: 6rem;
-  }
-
-  &__brand {
-    height: 4rem;
-    width: 6rem;
-  }
+}
+.tire-img__main {
+  height: 9rem;
+  width: 6rem;
+}
+.tire-img__brand {
+  height: 4rem;
+  width: 6rem;
 }
 
-
-/*# sourceMappingURL=styles.css.map */
 
 html, body {
   height: 100%;
@@ -239,34 +221,27 @@ body {
 }
 
 .validation-input {
-
   margin: 0 auto;
   border-radius: 1rem;
-  //border: 1px solid red;
-  :invalid {
-    color: red;
-    border: 1px solid red;
-  }
-
-  &.valid {
-
-    input {
-      border: 1px solid green;
-    }
-  }
+}
+.validation-input :invalid {
+  color: red;
+  border: 1px solid red;
+}
+.validation-input.valid input {
+  border: 1px solid green;
 }
 
 input:invalid {
   border: 1px solid red;
 }
 
-
 input {
   margin: 0 auto;
   border-radius: 1rem;
-
 }
-small{
+
+small {
   color: rgba(28, 50, 194, 0.88);
 }
 
@@ -281,21 +256,17 @@ small{
 
 .invalid {
   color: red;
-
-  input {
-    border: 1px solid red;
-  }
+}
+.invalid input {
+  border: 1px solid red;
 }
 
-.valid {
-
-  input {
-    border: 1px solid green;
-  }
+.valid input {
+  border: 1px solid green;
 }
 
 .input-wrap {
-  height: 6rem
+  height: 6rem;
 }
 
 .alert-error {
@@ -306,22 +277,14 @@ small{
   border-radius: 0.3rem;
   color: red;
   margin: 0 auto;
-
 }
 
-//customInput
-
-.valid-input {
-  &.touched {
-    input {
-      border: 1px solid green;
-    }
-  }
+.valid-input.touched input {
+  border: 1px solid green;
 }
 
 .dashboard-search {
   height: 4rem;
 }
 
-.show-placeholder {
-}
+/*# sourceMappingURL=styles.css.map */

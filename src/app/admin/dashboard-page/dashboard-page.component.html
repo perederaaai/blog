@@ -1,0 +1,38 @@
+<div>
+<h2>  Редагування постів
+</h2>
+</div>
+
+<div class="form-control">
+
+  <input class="dashboard-search" placeholder="Пошук постів" type="search" [(ngModel)]="search">
+</div>
+<div>
+  <div class="container" *ngIf="posts.length; else loader">
+
+    <div class="header">
+      <div>№</div>
+      <div>Автор</div>
+      <div>Тема</div>
+      <div>Дата</div>
+      <div>Функції</div>
+    </div>
+    <div class="content-wrap"
+         *ngFor="let post of posts | searchPosts: search ; let i = index"
+    >
+      <div>{{i + 1}}</div>
+      <div>{{post.author}}</div>
+      <div>{{post.title}}</div>
+      <div>{{post.date | date: 'medium': ' ': 'ua' }}</div>
+      <div class="double-btn">
+        <button (click)="openPost(post.id)">Редагувати</button>
+        <button (click)="removePost(post.id)">Видалити</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<ng-template #loader>
+  <div class="card"> Триває загрузка...</div>
+</ng-template>
