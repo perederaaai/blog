@@ -9,11 +9,11 @@ import { IPost } from '../../interface';
 })
 export class CardComponent {
 
-  @Input() post: IPost
+  @Input() post: IPost;
   constructor(private router: Router) {
   }
 
-  goToPost() {
+  goToPost():void {
     this.router.navigate(['/post', this.post.id])
   }
 }

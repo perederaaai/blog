@@ -20,6 +20,6 @@ export interface IPost {
 }
 export interface IEnvironment{
   production: boolean,
-  apiKey: string
+  apiUrl: string
   dbUrl: string
 }

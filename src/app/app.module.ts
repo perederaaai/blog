@@ -9,11 +9,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './shared/auth.interceptor';
 import { registerLocaleData } from '@angular/common';
 import locateData from '@angular/common/locales/ru-UA';
+import { StoreModule } from '@ngrx/store';
 
 
-registerLocaleData(locateData,'ua')
+registerLocaleData(locateData, 'ua')
 
-const INTERCEPTOR_PROVIDER : Provider = {
+const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
   multi: true,
   useClass: AuthInterceptor,
@@ -28,6 +29,7 @@ const INTERCEPTOR_PROVIDER : Provider = {
     SharedModule,
     AppRoutingModule,
     AdminModule,
+    StoreModule.forRoot({}, {}),
   ],
   exports: [],
   providers: [INTERCEPTOR_PROVIDER],

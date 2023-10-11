@@ -1,13 +1,11 @@
 <div *ngIf="form; else loader">
-  <form class="card card-wrap" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="card card-wrap" [formGroup]="form" >
+
     <div>
       <div class="form-control">
         <app-custom-input
-          [inputClass]="'validation-input'"
           [label]="'Заголовок:'"
           formControlName="title"
-          inputValue="{{value}}"
-          [inputType]="'text'"
           [requiredText]="'А заголовок буде?'"
           [class]="'valid-input'"
           [placeholder]="'Напишіть заголовок'"
@@ -16,14 +14,14 @@
 
       <div class="form-control">
         <label>Текст посту: </label>
-        <div [froalaEditor] [(froalaModel)]="editorContent" formControlName="text"></div>
+        <div [froalaEditor]="editorConfig" [(froalaModel)]="editorContent" formControlName="text"></div>
       </div>
     </div>
     <br>
 
-    <button type="submit" class="btn btn-dark" [disabled]="form.invalid"> Підтвердити</button>
+    <button type="submit" class="btn btn-dark" [disabled]="form.invalid" (click)="submit()"> Підтвердити</button>
 
-  </form>
+  </div>
 </div>
 <ng-template #loader>
   Завантаження...

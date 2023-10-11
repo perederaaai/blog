@@ -1,71 +1,73 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PostingServices } from '../../shared/posting.services';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription, switchMap } from 'rxjs';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject, Subscription, switchMap, takeUntil } from 'rxjs';
 import { IPost } from '../../shared/interface';
 import { AlertService } from '../shared/services/alert.service';
 
 @Component({
-  selector: 'app-edit-post',
-  templateUrl: './edit-post.component.html',
-  styleUrls: ['./edit-post.component.scss']
+    selector: 'app-edit-post',
+    templateUrl: './edit-post.component.html',
+    styleUrls: ['./edit-post.component.scss']
 })
 export class EditPostComponent implements OnInit, OnDestroy {
 
-  public form: FormGroup;
-  public value: string = '';
-  public editorContent: any;
-  private post: IPost;
-  public updFlag: boolean = false;
-  updSub: Subscription;
+    public form: FormGroup;
+    public editorContent: string;
+    private post: IPost;
+    public updFlag: boolean = false;
+    public destroy$: Subject<void> = new Subject<void>();
+    public editorConfig: any;
 
-
-  constructor(
-    private router: ActivatedRoute,
-    private http: PostingServices,
-    private alert: AlertService,
-  ) {
-  }
-
-  ngOnInit() {
-    this.router.params
-      .pipe(
-        switchMap(params => {
-          return this.http.getById(params['id'])
-        })
-      )
-      .subscribe((post: IPost) => {
-        this.form = new FormGroup<any>({
-          title: new FormControl(post.title, Validators.required),
-          text: new FormControl(post.text, Validators.required)
-        })
-        this.post = post
-      })
-  }
-
-  submit() {
-    if (this.form.invalid) {
-      return
+    constructor(
+        private route: ActivatedRoute,
+        private postService: PostingServices,
+        private alert: AlertService,
+        private fb: FormBuilder,
+    ) {
     }
-    this.updFlag = true
 
-    this.updSub = this.http.update({
-      ...this.post,
-      title: this.form.value.title,
-      text: this.form.value.text,
-    }).subscribe(() => {
-      this.updFlag = false
-      this.alert.success('Пост відредаговано!')
-      this.form.reset()
-    })
-  };
-
-  ngOnDestroy() {
-    if (this.updSub) {
-      this.updSub.unsubscribe()
+    ngOnInit() {
+        this.initForm();
+        this.getData();
     }
-  }
+
+    getData(): void {
+        const postId = this.route.snapshot.params['id'];
+        this.postService.getById(postId)
+            .subscribe((post: IPost) => {
+                this.post = post;
+                this.form.patchValue(post);
+            });
+    };
+
+    initForm(): void {
+        this.form = this.fb.group({
+            title: ['', [Validators.required]],
+            text:['', [Validators.required]]
+        });
+    }
+
+    submit() {
+        if (!this.form.valid) return
+        this.updFlag = true;
+        this.postService.update({
+            ...this.post,
+            ...this.form.value
+        })
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => {
+            this.updFlag = false;
+            this.alert.success('Пост відредаговано!');
+            this.form.reset();
+        })
+    };
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
+    };
 
 
 }

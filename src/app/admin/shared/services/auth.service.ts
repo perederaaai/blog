@@ -7,70 +7,66 @@ import { environment } from '../../../../environments/environments';
 
 @Injectable()
 export class AuthService {
-  public error$: Subject<string> = new Subject<string>();
-  public panelFlag: boolean = false;
-  apiKey: string = 'AIzaSyDlsrpW5ceZKs3bUK9K4Nlf-aJ91UUgomA';
+    public error$: Subject<string> = new Subject<string>();
+    public panelFlag: boolean = false;
+    private apiKey: string = 'AIzaSyDlsrpW5ceZKs3bUK9K4Nlf-aJ91UUgomA';
 
-
-
-
-  constructor(private http: HttpClient,
-              private router: Router) {
-  }
-
-  get token(): string | null {
-    const expDate = localStorage.getItem('FB-token-exp');
-    const fbToken = localStorage.getItem('FB-token');
-    // console.log(expDate);
-    if (!expDate || !fbToken  || (new Date() >= new Date(expDate))) {
-      return null;
-    } else {
-      return localStorage.getItem('FB-token');
+    constructor(private http: HttpClient,
+                private router: Router) {
     }
-  };
 
-  logIn(user: IUserData): Observable<IFBTokens> {
-    user.returnSecureToken = true;
-    return this.http.post(`${environment.apiKey}${this.apiKey}`, user)
-      .pipe(
-        delay(700),
-        catchError(this.handleError.bind(this)),
-        tap(this.setToken),
-      )
-  };
+    get token(): string | null {
+        const expDate = localStorage.getItem('FB-token-exp');
+        const fbToken = localStorage.getItem('FB-token');
+        // console.log(expDate);
+        if (!expDate || !fbToken || (new Date() >= new Date(expDate))) {
+            return null;
+        } else {
+            return localStorage.getItem('FB-token');
+        }
+    };
 
-  logOut(): void {
-    this.setToken(null);
-    this.router.navigate(['/admin', 'login'],{
-      queryParams:{
-        loginAgain: true
-      }
-    });
-  };
+    logIn(user: IUserData): Observable<IFBTokens> {
+        const newUserData = {...user, returnSecureToken: true};
+        return this.http.post(`${environment.apiUrl}${this.apiKey}`, newUserData)
+            .pipe(
+                delay(700),
+                catchError(this.handleError.bind(this)),
+                tap(this.setToken),
+            )
+    };
 
-  isAuthenticated(): boolean {
-    return !!this.token
-  };
+    logOut(): void {
+        this.setToken(null);
+        this.router.navigate(['/admin', 'login'], {
+            queryParams: {
+                loginAgain: true
+            }
+        });
+    };
 
-  private setToken(response: any | null): void {
-    if (response) {
-      const expDate: Date = new Date(new Date().getTime() + +response.expiresIn * 1000);
+    isAuthenticated(): boolean {
+        return !!this.token
+    };
 
-      localStorage.setItem('FB-token', response.idToken);
-      localStorage.setItem('FB-token-exp', expDate.toString());
-    } else {
-      localStorage.clear();
+    private setToken(response: any | null): void {
+        if (response) {
+            const expDate: Date = new Date(new Date().getTime() + +response.expiresIn * 1000);
+
+            localStorage.setItem('FB-token', response.idToken);
+            localStorage.setItem('FB-token-exp', expDate.toString());
+        } else {
+            localStorage.clear();
+        }
+    };
+
+    handleError(error: HttpErrorResponse): Observable<any> {
+        const {message} = error.error.error;
+        switch (message) {
+            case 'INVALID_LOGIN_CREDENTIALS':
+                this.error$.next('Вказано невірні данні')
+                break
+        }
+        return throwError(() => error);
     }
-  };
-
-  handleError(error: HttpErrorResponse) {
-    const {message} = error.error.error;
-    switch (message) {
-      case 'INVALID_LOGIN_CREDENTIALS':
-        this.error$.next('Вказано невірні данні')
-        break
-    }
-    return throwError(error);
-
-  }
 }

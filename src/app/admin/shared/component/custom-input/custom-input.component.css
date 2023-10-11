@@ -1,3 +1,11 @@
-
+.invalid label {
+  color: black;
+}
+.invalid small {
+  color: red;
+}
+.invalid input {
+  border: 1px solid red;
+}
 
 /*# sourceMappingURL=custom-input.component.css.map */

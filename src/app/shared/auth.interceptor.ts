@@ -9,8 +9,6 @@ export class AuthInterceptor implements HttpInterceptor{
 
   constructor(
     private authService : AuthService,
-    private router: Router,
-
   ) {
   }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -19,17 +17,16 @@ export class AuthInterceptor implements HttpInterceptor{
       setParams:{
         auth: this.authService.token as string
       }
-    })
+    });
     return next.handle(req)
       .pipe(
         catchError((error: HttpErrorResponse) =>{
-          console.log(error)
           if (error.status === 401){
-            this.authService.logOut()
+            this.authService.logOut();
           }
-          return throwError(error)
+          return throwError(() => error)
         })
-      )
+      );
   }
 
 }

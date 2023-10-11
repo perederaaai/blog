@@ -1,13 +1,9 @@
-<div class="container"
-*ngIf="posts$ | async as posts; else loading"
->
+<div class="container" *ngIf="posts$ | async as posts; else loading">
 
-  <app-card
-  *ngFor="let post of posts"
-  [post]="post"
-  ></app-card>
+  <app-card *ngFor="let post of posts" [post]="post"></app-card>
+
 </div>
-<ng-template #loading> <p>Йде завантаження...</p></ng-template>
-  <router-outlet></router-outlet>
+<ng-template #loading><p>Йде завантаження...</p></ng-template>
+<router-outlet></router-outlet>
 
 
