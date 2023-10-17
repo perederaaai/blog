@@ -1,4 +1,4 @@
-import { NgModule, Provider } from '@angular/core';
+import { isDevMode, NgModule, Provider } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,6 +10,11 @@ import { AuthInterceptor } from './shared/auth.interceptor';
 import { registerLocaleData } from '@angular/common';
 import locateData from '@angular/common/locales/ru-UA';
 import { StoreModule } from '@ngrx/store';
+import { reducers } from './store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { PostEffects } from './store/posts/post.effects';
+import { AuthEffects } from './store/auth/auth.effects';
 
 
 registerLocaleData(locateData, 'ua')
@@ -29,7 +34,9 @@ const INTERCEPTOR_PROVIDER: Provider = {
     SharedModule,
     AppRoutingModule,
     AdminModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot(reducers, {}),
+    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()}),
+    EffectsModule.forRoot([PostEffects, AuthEffects ]),
   ],
   exports: [],
   providers: [INTERCEPTOR_PROVIDER],

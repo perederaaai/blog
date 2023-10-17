@@ -1,7 +1,7 @@
-export interface IUserData {
+export interface IUser {
   email: string;
   password: string;
-  returnSecureToken?: boolean;
+  returnSecureToken?: boolean | null;
 }
 
 export interface IFBTokens {
@@ -14,9 +14,9 @@ export interface IPost {
   title: string;
   text: string;
   author: string;
-  id? : any;
-  name?: string,
-  date: Date;
+  id? : any | null;
+  name?: string | null,
+  date: Date ;
 }
 export interface IEnvironment{
   production: boolean,
