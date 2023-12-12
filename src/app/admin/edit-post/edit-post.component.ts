@@ -22,7 +22,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
   public updFlag: boolean = false;
   public destroy$: Subject<void> = new Subject<void>();
   public editorConfig: any;
-  public post$: Observable<IPost[]>
+  public post$: Observable<IPost[]>;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,7 +36,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initForm();
     this.getData();
-  }
+  };
 
   getData(): void {
     const postId = this.route.snapshot.params['id'];
@@ -53,26 +53,17 @@ export class EditPostComponent implements OnInit, OnDestroy {
       title: ['', [Validators.required]],
       text: ['', [Validators.required]]
     });
-  }
+  };
 
-  submit() {
-
+  submit(): void {
     if (!this.form.valid) return;
     this.updFlag = true;
     this.store$.dispatch(editPostAction(this.form.value));
-    // this.postService.update({
-    //   ...this.post,
-    //   ...this.form.value
-    // })
-    // .pipe(takeUntil(this.destroy$))
-    // .subscribe(() => {
     this.updFlag = false;
-    // this.alert.success('Пост відредаговано!');
     this.form.reset();
-    // })
   };
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   };

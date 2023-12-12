@@ -15,7 +15,6 @@ import { getPostList, removePost } from '../../store/posts/post.action';
 })
 export class DashboardPageComponent implements OnInit, OnDestroy {
 
-  public posts: IPost[] = [];
   public value: string = '';
   public search: string;
   public destroy$: Subject<void> = new Subject<void>();
@@ -37,18 +36,11 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   getData() {
     this.posts$ = this.store$.select(selectPostList);
     this.store$.dispatch(getPostList());
-    // this.postService.getAllPost()
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe((posts: IPost[]) => {
-    //     if (!posts) return;
-    //     this.store$.dispatch(getPostList({postList: posts}));
-    //   });
-
-  }
+  };
 
   openPost(id: string): void {
     this.router.navigate(['/post', id, 'edit']);
-  }
+  };
 
   removePost(post: IPost): void {
     this.store$.dispatch(removePost({id: post.id}))
@@ -57,10 +49,10 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.alert.danger('Пост видалено!');
       });
-  }
+  };
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-  }
+  };
 }

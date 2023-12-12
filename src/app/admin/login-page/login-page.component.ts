@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AlertService } from '../shared/services/alert.service';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IState, selectAuthList } from '../../store';
@@ -19,12 +18,10 @@ export class LoginPageComponent implements OnInit {
 
   public form: FormGroup;
   public message: string;
-  private auth$: Observable<IAuth>;
+  public auth$: Observable<IAuth>;
 
   constructor(public auth: AuthService,
-              private router: Router,
               private route: ActivatedRoute,
-              private alert: AlertService,
               private fb: FormBuilder,
               private store$: Store<IState>,
   ) {
@@ -33,8 +30,7 @@ export class LoginPageComponent implements OnInit {
   ngOnInit() {
     this.initForm();
     this.checkQueryParams();
-    console.log(this.form.value)
-  }
+  };
 
   initForm(): void {
     this.auth$ = this.store$.select(selectAuthList);
@@ -42,7 +38,7 @@ export class LoginPageComponent implements OnInit {
       email: ['igor.peredera@gmail.com', [Validators.email, Validators.required]],
       password: ['111111', [Validators.minLength(6), Validators.required]],
     });
-  }
+  };
 
   checkQueryParams(): void {
     this.route.queryParams.subscribe((params): void => {
@@ -51,24 +47,14 @@ export class LoginPageComponent implements OnInit {
       }
       this.auth.token ? this.message = '' : null;
     });
-  }
+  };
 
   submit(): void {
-    this.store$.dispatch(adminAuthGetUserData({userData:this.form.value}))
-
+    this.store$.dispatch(adminAuthGetUserData({userData: this.form.value}))
     if (!this.form.valid) {
       this.form.value.returnSecureToken = false;
     }
-
-    // this.auth.logIn(userData)
-    //   .subscribe((resp) => {
-    //     localStorage.setItem('FB-token-exp', 'Thu Oct 12 2025 17:00:53 GMT+0300 (Восточная Европа, летнее время)')
-    //     this.form.reset();
-    //     this.alert.warning('Авторизацію пройдено');
-    //     this.router.navigate(['/admin', 'dashboard']);
-    //     this.auth.panelFlag = true;
-    //   });
-  }
+  };
 
 
 }

@@ -12,14 +12,14 @@ export class AlertComponent implements OnInit, OnDestroy {
     @Input() delay: number = 2000;
     public text: string;
     public type: string;
-    private destroy$: Subject<void> = new Subject<void>();
+    public destroy$: Subject<void> = new Subject<void>();
 
     constructor(private alertS: AlertService) {
     }
 
     ngOnInit(): void {
         this.showAlertModal();
-    }
+    };
 
     showAlertModal(): void {
         this.alertS.alert$
@@ -32,7 +32,7 @@ export class AlertComponent implements OnInit, OnDestroy {
                     this.text = '';
                 }, this.delay);
             });
-    }
+    };
 
     ngOnDestroy(): void {
         this.destroy$.next();
